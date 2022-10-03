@@ -1,5 +1,16 @@
 const Emp = require("../model/empolyee");
 
+const getEmpolyees = (req, res) => {
+    Emp.find((err, emplys) => {
+        if (err) {
+            res.send(err);
+        }
+        res.json(emplys);
+    });
+};
+
+
+
 const getEmpolyee = async (req, res) => {
     const { id } = req.params
 
