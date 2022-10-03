@@ -1,6 +1,6 @@
 const Emp = require("../model/empolyee");
 
-const getEmpolyee = (req, res) => {
+const getEmpolyees = (req, res) => {
     Emp.find((err, emplys) => {
         if (err) {
             res.send(err);
@@ -11,26 +11,16 @@ const getEmpolyee = (req, res) => {
 
 const creatEmpolyee = async (req, res) => {
     const emp = await Emp.create({
-        staffid: req.body.staffid,
         fullname: req.body.fullname,
         gender: req.body.gender,
         tell: req.body.tell,
+        email: req.body.email,
         address: req.body.address,
-        type: req.body.type,
+        department: req.body.type,
         salary: req.body.salary,
         createdBy: req.body.createdBy,
-        apartid: req.body.apartid,
         status: req.body.status,
-
-
     });
-
-    // unit.save((err, unit) => {
-    //   if (err) {
-    //     res.send(err);
-    //   }
-
-    // });
     res.json(emp);
 };
 
@@ -38,18 +28,7 @@ const updateEmployee= (req, res) => {
     Emp.findOneAndUpdate(
         { _id: req.params.staffid },
         {
-            $set: {
-                staffid: req.body.staffid,
-                fullname: req.body.fullname,
-                gender: req.body.gender,
-                tell: req.body.tell,
-                address: req.body.address,
-                type: req.body.type,
-                salary:req.body.salary,
-                createdBy: req.body.createdBy,
-                apartid:req.body.apartid,
-                status:req.body.status
-            },
+            ...req.body
         },
         { new: true },
         (err, Emp) => {
