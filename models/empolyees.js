@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const empSchema = mongoose.Schema({
-    staffid: {
-        type: Number,
-        required: true,
-        unique: true
-    },
     fullname: {
         type: String,
         required: true,
@@ -17,8 +12,13 @@ const empSchema = mongoose.Schema({
         required: true,
 
     },
+    email:
+    {
+        type: string,
+        required: false,
 
-    tell:
+    },
+    tel:
     {
         type: Number,
         required: true,
@@ -30,7 +30,7 @@ const empSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    type:
+    department:
     {
         type: String,
         required: true,
@@ -50,31 +50,22 @@ const empSchema = mongoose.Schema({
         type: String,
         required: true,
 
-        },
-        
-        
-    apartid:
-    {
-        type: String,
-        required: true,
-
-        },
-        
+        },                
         
     status:
     {   type: Boolean,
         default: false
 
-        },
-        
-        
-        
-        
+        },       
         
 },{
-    timestamps: true}
+    timestamps: true},
+photo: {
+       type: string, 
+        required: false
+ }
        
 )
 
-const empolyee = mongoose.model('empolyee', empSchema);
-module.exports = empolyee;
+const empolyees = mongoose.model('empolyees', empSchema);
+module.exports = empolyees;
