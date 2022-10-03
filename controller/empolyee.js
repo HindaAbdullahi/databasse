@@ -1,13 +1,14 @@
 const Emp = require("../model/empolyee");
 
-const getEmpolyee = (req, res) => {
-    Emp.find((err, emplys) => {
-        if (err) {
-            res.send(err);
-        }
-        res.json(emplys);
-    });
-};
+const getEmpolyee = async (req, res) => {
+    const { id } = req.params
+
+
+    const emplys = await Emp.findById(id)
+    Emp(emplys)
+
+    res.status(200).json(user)
+}
 
 const creatEmpolyee = async (req, res) => {
     const emp = await Emp.create({
