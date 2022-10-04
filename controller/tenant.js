@@ -1,6 +1,6 @@
 const Tenant = require("../model/tenants");
 
-const getTenant = (req, res) => {
+const getTenants = (req, res) => {
     Tenant.find((err, tenants) => {
         if (err) {
             res.send(err);c
@@ -9,6 +9,16 @@ const getTenant = (req, res) => {
     });
 };
 
+
+const getTenant = async (req, res) => {
+    const { tenantid } = req.params
+
+
+    const tenants = await Tenant.findById(tenantid)
+    Tenant(tenants)
+
+    res.status(200).json(tenants)
+}
 const createtenant = async (req, res) => {
     const tenant = await Tenant.create({
         tenantid: req.body.tenantid,
@@ -64,6 +74,7 @@ const deleteTenant = (req, res) => {
 };
 
 module.exports = {
+    getTenants,
     getTenant,
     createtenant,
     updatetenant,
