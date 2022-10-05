@@ -1,6 +1,6 @@
 const Floor= require("../model/Floor");
 
-const getFloor = (req, res) => {
+const getFloors = (req, res) => {
     Floor.find((err, floors) => {
         if (err) {
             res.send(err);
@@ -8,7 +8,15 @@ const getFloor = (req, res) => {
         res.json(floors);
     });
 };
+const getFloor = async (req, res) => {
+    const { floorid } = req.params
 
+
+    const floors = await Floor.findById(floorid)
+    Tenant(floors)
+
+    res.status(200).json(floors)
+}
 const createFloor = async(req, res) => {
     const floor = await Floor.create({
         floorid: req.body.floorid,
@@ -57,6 +65,7 @@ const deleteFloor = (req, res) => {
 
 module.exports = {
     getFloor,
+    getFloors,
     createFloor,
     updateFloor,
     deleteFloor,
