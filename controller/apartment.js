@@ -1,68 +1,50 @@
 const Apartment= require("../model/apartment");
 const Floor= require("../model/Floor");
-const getApartment = (req, res) => {
-    Apartment.find((err, apartments) => {
-        if (err) {
-            res.send(err);
-        }
-        res.json(apartments);
+const { validate, Apartment } = require("../models/apartment");
+
+const singleApartment= async(req, res) => {
+
+    const apartment = await Apartment.find({});
+    res.send(apartment);
+  };
+  const getApartments= async(req,res) => {   
+    let apartment = await Apartment.findOne({ name: req.body.name });
+    if (apartment) return res.status(400).send("apartment all ready registered");
+    apartment = await Apartment.create({
+      name: req.body.name,
+      location: req.body.location,
+      address: req.body.address,
     });
-};
-
-const createApartment = async(req, res) => {
-   
-    const apartment = await Apartment.create({
-        apartid: req.body.apartid,
-        apartname: req.body.apartname,
-        floorid: req.body.floorid,
-        phone: req.body.phone,
-      
-
-
-    });
-
-    apartment.save((err, apartment) => {
-        if (err) {
-            res.send(err);
-        }
-        res.json(apartment);
-    });
-};
-
-const updateApartment = (req, res) => {
-
-
-    Apartment.findOneAndUpdate(
-        { _id: req.params.apartid },
+  
+    res.send(apartment);
+   }
+ const updateApartment=  async(req, res) => {
+      let apartment = await Apartment.findOne({ name: req.body.name });
+      if (apartment)
+        return res.status(400).send("apartment all ready registered");
+      apartment = await Apartment.findByIdAndUpdate(
+        req.params.id,
         {
-            $set: {
-                apartid: req.body.apartid,
-                apartname: req.body.apartname,
-                floorid: req.body.floorid,
-                units: req.body.units,
-                phone: req.body.phone,
-               
-            },
+          name: req.body.name,
+          location: req.body.location,
+          address: req.body.address,
         },
-        { new: true },
-        (err, Apartment) => {
-            if (err) {
-                res.send(err);
-            } else res.json(Apartment);
-        }
-    );
-};
+        { new: true }
+      );
+  
+      res.send(apartment);
+ }
 
-const deleteApartment = (req, res) => {
-    Apartment
-    .deleteOne({ _id: req.params.apartid })
-        .then(() => res.json({ message: "apartment Deleted" }))
-        .catch((err) => res.send(err));
-};
+const deleteApartment= async(req, res) => {
 
-module.exports = {
-    getApartment,
-    createApartment,
+    const apartment = await Apartment.findByIdAndRemove(req.params.id);
+  
+    res.send(apartment);
+}
+  module.exports = {
+    singleApartment,
+    getApartments,
     updateApartment,
     deleteApartment,
 };
+
