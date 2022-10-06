@@ -1,6 +1,6 @@
 const {
-    getApartment,
-    createApartment,
+    singleApartment,
+    getApartments,
     updateApartment,
     deleteApartment,
   } = require("../controllers/apartment");
@@ -11,9 +11,9 @@ const {
     res.send("Let build a CRUD API!");
   });
   
-  router.get("/apartments", getApartment);
-  router.post("/apartments", createApartment);
+  router.get("/apartments", singleApartment);
+  router.post("/apartments",  getApartments);
   router.put("/apartments/:apartid", updateApartment);
-  router.delete("/apartments/:apartid", deleteApartment);
+  router.delete("/apartments/:apartid", deleteApartment;
   
   module.exports = router;
