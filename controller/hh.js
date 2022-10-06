@@ -9,7 +9,16 @@ const singleDepartment = async (req, res) => {
     const dept = await Department.find({});
     res.send(dept);
 };
-const getDepartment = async (req, res) => {
+const getDepartments = async (req, res) => {
+    const { id } = req.params
+
+
+    const dep = await Department.findById(id)
+    Department(dep)
+
+    res.status(200).json(dep)
+}
+const createDepartment = async (req, res) => {
     let dept = await Department.findOne({ name: req.body.name });
     if (dept) return res.status(400).send("department already registered");
 
@@ -47,7 +56,8 @@ const deleteDepartment = async (req, res) => {
 }
 module.exports = {
     singleDepartment,
-    getDepartment,
+    getDepartments,
+    createDepartment,
     updateDepartment,
     deleteDepartment,
 };
