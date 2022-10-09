@@ -70,6 +70,7 @@ const deleteGuarant = (req, res) => {
 
 module.exports = {
     getGuarant,
+    getGuarants,
     createGuarant,
     updateGuarant,
     deleteGuarant,
