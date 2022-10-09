@@ -9,6 +9,15 @@ const getvisitors = (req, res) => {
   });
 };
 
+const getVisitor = async (req, res) => {
+  const { visitorid } = req.params
+
+
+  const visitors = await Visitor.findById(visitorid)
+  Visitor(visitors)
+
+  res.status(200).json(visitors)
+}
 const createVisitors = async (req, res) => {
   const visitor = await Visitor.create({
     visitorid: req.body.visitorid,
@@ -61,6 +70,7 @@ const deleteVisitor = (req, res) => {
 
 module.exports = {
   getvisitors,
+    getVisitor,
   createVisitors,
   updateVisitor,
   deleteVisitor,
