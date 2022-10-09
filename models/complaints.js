@@ -1,35 +1,23 @@
 const mongoose = require('mongoose');
 
 const complaintScheme = mongoose.Schema({
-    queryid: {
-        type: Number,
+    tenant : {
+        type: String,
         required: true,
-        unique: true
+      
     },
-    tenantid: {
+    subject: {
         type: String,
         required: true,
        
     },
     
-    apartid: {
+    description: {
         type: String,
-        required: true,
+        required: false,
        
     },
-    staffid:
-    {
-        type: String,
-        required: true,
-
-    },
-
-    description:
-    {
-        type: String,
-        required: true
-    }
-    ,
+   
     status:
     {
         type: Boolean,
