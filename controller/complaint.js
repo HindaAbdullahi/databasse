@@ -1,6 +1,6 @@
 const Complaint = require("../model/complaints");
 
-const getComplaint = (req, res) => {
+const getComplaints = (req, res) => {
     Complaint.find((err, complaints) => {
         if (err) {
             res.send(err);
@@ -8,16 +8,21 @@ const getComplaint = (req, res) => {
         res.json(complaints);
     });
 };
+const getComplaint = async (req, res) => {
+    const { id } = req.params
 
+
+    const complaints = await Complaint.findById(id)
+    Complaint(complaints)
+
+    res.status(200).json(complaints)
+}
 const createComplaint = async (req, res) => {
     const complaint = await Complaint.create({
-        queryid: req.body.queryid,
-        tenantid: req.body.tenantid,
-        apartid: req.body.apartid,
-        staffid: req.body.staffid,
+        tenant:req.body.tenant,
+        subject: req.body.subject,
         description: req.body.description,
-        status: req.body.status,
-
+        status: req.body.status
     });
 
     complaint.save((err, complaint) => {
@@ -33,14 +38,7 @@ const updateComplaint = (req, res) => {
     Complaint.findOneAndUpdate(
         { _id: req.params.queryid },
         {
-            $set: {
-                queryid: req.body.queryid,
-                tenantid: req.body.tenantid,
-                apartid: req.body.apartid,
-                staffid: req.body.staffid,
-                description: req.body.description,
-                status: req.body.status,
-            },
+            ...req.body,
         },
         { new: true },
         (err, Complaint) => {
@@ -58,6 +56,7 @@ const deleteComplaint = (req, res) => {
 };
 
 module.exports = {
+    getComplaints,
     getComplaint,
     createComplaint,
     updateComplaint,
