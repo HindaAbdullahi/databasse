@@ -1,5 +1,6 @@
 const {
-    getComplaint,
+    getComplaints,
+     getComplaint,
     createComplaint,
     updateComplaint,
     deleteComplaint,
@@ -11,7 +12,8 @@ const {
     res.send("Let build a CRUD API!");
   });
   
-  router.get("/complaints", getComplaint);
+  router.get("/complaints", getComplaints);
+  router.get("/complaint", getComplaint);
   router.post("/complaints", createComplaint);
   router.put("/complaints/:queryid", updateComplaint);
   router.delete("/complaints/:queryid", deleteComplaint);
