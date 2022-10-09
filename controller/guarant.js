@@ -1,6 +1,6 @@
 const Guarant = require("../model/guarantor");
 
-const getGuarant = (req, res) => {
+const getGuarants = (req, res) => {
     Guarant.find((err, guarants) => {
         if (err) {
             res.send(err);
@@ -9,6 +9,15 @@ const getGuarant = (req, res) => {
     });
 };
 
+const getGuarant = async (req, res) => {
+    const { guarantid } = req.params
+
+
+    const guarants = await Guarant.findById(guarantid)
+    Guarant(guarants)
+
+    res.status(200).json(guarants)
+}
 const createGuarant = async (req, res) => {
     const guarant = await Guarant.create({
         guarantid: req.body.guarantid,
